@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ParkPilot Web Suite</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="logo">P</div><div><h1>ParkPilot Web Suite</h1><p>Interactive AI Parking Space Detection & Navigation Browser</p></div></div>
+  <nav>
+    <button class="tab active" data-tab="monitor">Live Monitor</button>
+    <button class="tab" data-tab="editor">Slot Polygon Editor</button>
+    <button class="tab" data-tab="config">Camera & Model Config</button>
+  </nav>
+</header>
+
+<main>
+<section id="monitor" class="page active">
+  <div class="grid monitor-grid">
+    <article class="panel video-panel">
+      <div class="panel-head"><h2>Live Camera Feed & Navigation Stream (<span id="sourceLabel">CAM-01</span>)</h2><span id="streamMeta">30.0 FPS | 1280×720</span></div>
+      <div class="video-wrap"><img id="liveVideo" src="/video_feed" alt="ParkPilot live camera feed" /><div class="engine-pill"><span></span> YOLOv8 + Centroid Navigation Engine</div></div>
+      <div class="actions"><button class="btn green" id="simulateBtn">Toggle Traffic Simulation</button><button class="btn orange" id="nextBtn">Drive Next Vehicle</button><button class="btn dark" id="resetBtn">Reset All Slots</button></div>
+    </article>
+    <aside>
+      <div class="stats"><div class="stat"><small>TOTAL CAPACITY</small><strong id="capacity">6</strong></div><div class="stat"><small>AVAILABLE SLOTS</small><strong id="available">6</strong></div><div class="stat"><small>OCCUPIED SLOTS</small><strong id="occupied">0</strong></div></div>
+      <div class="recommend"><small>RECOMMENDED PARKING NAVIGATION TARGET</small><h2 id="nearest">—</h2><p>Distance from Entrance: <b id="distance">—</b> px</p><span>NEAREST SLOT</span></div>
+      <div class="panel matrix"><h2>Live Slot Occupancy Matrix</h2><div id="slotCards" class="slot-cards"></div></div>
+    </aside>
+  </div>
+</section>
+
+<section id="editor" class="page">
+  <div class="grid editor-grid">
+    <article class="panel">
+      <div class="panel-head"><h2>Interactive Polygon Slot Editor</h2><span>Mode: Draw Polygon (Click 4 points)</span></div>
+      <div class="canvas-wrap"><canvas id="editorCanvas" width="900" height="500"></canvas></div>
+      <div class="actions"><button class="btn green" id="saveSlot">Save Custom Slot</button><button class="btn orange" id="placeEntrance">Click to Place Entrance</button><button class="btn dark" id="clearSelection">Clear Selection</button></div>
+    </article>
+    <article class="panel manager"><h2>Configured Slots Manager</h2><label>New Slot ID<input id="slotId" value="Slot_07" /></label><div class="table-head"><span>SLOT ID</span><span>VERTICES</span><span>ACTION</span></div><div id="slotTable"></div><div class="grid-generator"><h3>Auto Grid Generator</h3><div><input id="gridRows" type="number" min="1" value="2"><span>×</span><input id="gridCols" type="number" min="1" value="3"><button class="btn orange" id="generateGrid">Generate</button></div></div></article>
+  </div>
+</section>
+
+<section id="config" class="page">
+  <div class="grid config-grid">
+    <article class="panel"><h2>Video Feed Manager</h2><label>Upload Custom Video File (.mp4, .avi, .mov)<input id="videoFile" type="file" accept="video/mp4,video/avi,video/quicktime,video/x-matroska,video/webm" /></label><button class="btn orange" id="uploadBtn">Upload & Connect</button><label>RTSP Camera Stream URL / Webcam Index<input id="sourceInput" value="0" /></label><button class="btn orange" id="connectBtn">Connect Feed</button><p class="hint">Examples: <code>0</code> for local webcam or an RTSP URL. Keep credentials out of source control.</p></article>
+    <article class="panel"><h2>YOLOv8 Detection Settings</h2><label>Confidence Threshold (<span id="confidenceLabel">0.25</span>)<input id="confidence" type="range" min="0.1" max="0.9" step="0.05" value="0.25" /></label><div class="checks"><label><input type="checkbox" value="2" checked> Car</label><label><input type="checkbox" value="7" checked> Truck</label><label><input type="checkbox" value="5" checked> Bus</label><label><input type="checkbox" value="3" checked> Motorcycle</label></div><label>YOLO model<input id="modelInput" value="yolov8n.pt" /></label><button class="btn green" id="applySettings">Apply Detection Settings</button></article>
+  </div>
+</section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

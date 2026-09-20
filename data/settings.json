@@ -1,0 +1,7 @@
+{
+  "confidence": 0.25,
+  "classes": [2, 5, 7, 3],
+  "class_names": ["Car", "Truck", "Bus", "Motorcycle"],
+  "source": "0",
+  "model": "yolov8n.pt"
+}
